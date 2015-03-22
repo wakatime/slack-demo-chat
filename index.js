@@ -87,7 +87,7 @@ app.post('/webhooks/slack', function(req, res) {
         text: text,
       };
       USERS[id].emit('message', data);
-      res.status(201).send(JSON.stringify({error: false}));
+      res.status(201).send(JSON.stringify({status: 'sent', text: text}));
     } else {
       res.status(400).send(JSON.stringify({error: 'user is offline.'}));
     }
