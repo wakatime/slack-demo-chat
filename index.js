@@ -1,14 +1,21 @@
 var app = require('express')();
 var bodyParser = require('body-parser');
+var fs = require('fs');
 var http = require('http');
+var https = require('https');
 var multer = require('multer');
 var querystring = require('querystring');
 var random = require('random-js')();
 var request = require('request');
 var secrets = require('./secrets');
 
-var server = http.Server(app);
-var io = require('socket.io')(server);
+var server = http.createServer(app);
+var options = {
+  key: fs.readFileSync('./key.pem'),
+  cert: fs.readFileSync('./cert.pem'),
+};
+var server_ssl = https.createServer(options, app);
+var io = require('socket.io')(server_ssl);
 
 var USERS = {};
 
@@ -89,6 +96,9 @@ app.post('/webhooks/slack', function(req, res) {
   }
 });
 
-server.listen(secrets.port, function() {
-  console.log('listening on *:'+secrets.port+'.');
+server.listen(secrets.http_port, function() {
+  console.log('listening on *:'+secrets.http_port+'.');
+});
+server_ssl.listen(secrets.https_port, function() {
+  console.log('listening on *:'+secrets.https_port+'.');
 });
