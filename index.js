@@ -72,8 +72,15 @@ app.post('/webhooks/slack', function(req, res) {
       text = text.slice(id.length + 1);
     }
     if (id && USERS[id]) {
-      USERS[id].emit('message', { from: 'alan', text: text });
-      res.status(201).send(JSON.stringify({}));
+      var data = {
+        sender: {
+          name: 'alan',
+          avatar: 'https://secure.gravatar.com/avatar/5bbde3a573d9012842f5fd261caa0bfe?s=150&d=identicon',
+        },
+        text: text,
+      };
+      USERS[id].emit('message', data);
+      res.status(201).send(JSON.stringify({error: false}));
     } else {
       res.status(400).send(JSON.stringify({error: 'user is offline.'}));
     }
