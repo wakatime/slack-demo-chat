@@ -46,10 +46,22 @@ io.on('connection', function(socket) {
   socket.id = random.string(6);
   USERS[socket.id] = socket;
   console.log('User ' + socket.id + ' has joined.');
+  postSlackMessage({
+    'channel': secrets.slack_channel,
+    'text': 'User ' + socket.id + ' has joined.',
+    'username': 'WakaTime',
+    'icon_url': 'https://wakatime.com/static/img/wakatime-48.png',
+  });
 
   socket.on('disconnect', function() {
     delete USERS[socket.id];
     console.log('User ' + socket.id + ' has left.');
+    postSlackMessage({
+      'channel': secrets.slack_channel,
+      'text': 'User ' + socket.id + ' has left.',
+      'username': 'WakaTime',
+      'icon_url': 'https://wakatime.com/static/img/wakatime-48.png',
+    });
   });
 
   socket.on('message', function(data) {
