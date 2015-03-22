@@ -37,8 +37,10 @@ function postSlackMessage(data) {
     };
 
     request(options, function (error, response, body) {
-        console.log(response.statusCode);
-        console.log(body);
+        if (error) {
+          console.log(response.statusCode);
+          console.log(body);
+        }
     });
 }
 
