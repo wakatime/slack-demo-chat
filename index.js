@@ -117,7 +117,7 @@ app.post('/webhooks/slack', function(req, res) {
       res.status(201).send(JSON.stringify({status: 'sent', text: text}));
       postSlackMessage({
         'channel': secrets.slack_channel,
-        'text': text,
+        'text': 'In reply to ' + id + ': ' + text,
         'username': req.body['user_name'],
       });
     } else {
