@@ -100,11 +100,14 @@ app.post('/webhooks/slack', function(req, res) {
     if (id && USERS[id]) {
       var data = {
         sender: {
-          name: 'alan',
-          avatar: 'https://secure.gravatar.com/avatar/5bbde3a573d9012842f5fd261caa0bfe?s=150&d=identicon',
+          name: req.body['user_name'],
         },
         text: text,
       };
+      if (secrets.users[req.body['user_name']]) {
+        data.sender.avatar = secrets.users[req.body['user_name']].avatar;
+        data.sender.url = secrets.users[req.body['user_name']].url;
+      }
       USERS[id].emit('message', data);
       res.status(201).send(JSON.stringify({status: 'sent', text: text}));
     } else {
