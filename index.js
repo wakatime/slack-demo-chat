@@ -52,23 +52,27 @@ io.on('connection', function(socket) {
   socket.on('join', function(data) {
     socket.username = data.username;
     console.log(socket.username + '(' + socket.id + ') has joined.');
-    postSlackMessage({
-      'channel': secrets.slack_channel,
-      'text': socket.username + '(' + socket.id + ') has joined.',
-      'username': 'WakaTime',
-      'icon_url': 'https://wakatime.com/static/img/wakatime-48.png',
-    });
+    if (secrets.announce_presence) {
+      postSlackMessage({
+        'channel': secrets.slack_channel,
+        'text': socket.username + '(' + socket.id + ') has joined.',
+        'username': 'WakaTime',
+        'icon_url': 'https://wakatime.com/static/img/wakatime-48.png',
+      });
+    }
   });
 
   socket.on('disconnect', function() {
     delete USERS[socket.id];
     console.log(socket.username + '(' + socket.id + ') has left.');
-    postSlackMessage({
-      'channel': secrets.slack_channel,
-      'text': socket.username + '(' + socket.id + ') has left.',
-      'username': 'WakaTime',
-      'icon_url': 'https://wakatime.com/static/img/wakatime-48.png',
-    });
+    if (secrets.announce_presence) {
+      postSlackMessage({
+        'channel': secrets.slack_channel,
+        'text': socket.username + '(' + socket.id + ') has left.',
+        'username': 'WakaTime',
+        'icon_url': 'https://wakatime.com/static/img/wakatime-48.png',
+      });
+    }
   });
 
   socket.on('message', function(data) {
