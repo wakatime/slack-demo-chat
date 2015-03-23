@@ -65,7 +65,7 @@ io.on('connection', function(socket) {
   socket.on('disconnect', function() {
     delete USERS[socket.id];
     console.log(socket.username + '(' + socket.id + ') has left.');
-    if (secrets.announce_presence) {
+    if (secrets.announce_presence || socket.has_talked) {
       postSlackMessage({
         'channel': secrets.slack_channel,
         'text': socket.username + '(' + socket.id + ') has left.',
@@ -83,6 +83,7 @@ io.on('connection', function(socket) {
       'username': 'WakaTime',
       'icon_url': 'https://wakatime.com/static/img/wakatime-48.png',
     });
+    socket.has_talked = true;
   });
 });
 
