@@ -1,0 +1,23 @@
+{% raw %}
+  <script id="slack-message-template" type="x-tmpl-mustache">
+    <div id="msg_{{id}}" class="message">
+      <img src="{{sender.avatar}}" class="message-image img-rounded">
+      <a class="sender"{{#sender.url}} href="{{sender.url}}" target="_blank"{{/sender.url}}>{{sender.name}}</a>{{#sender.is_bot}}<span class="bot_label">BOT</span>{{/sender.is_bot}}
+      <a class="message-timestamp">{{message.time}}</a>
+      <span class="star fa fa-star"></span>
+      <i class="fa fa-cog"></i>
+      <span class="message_content">
+        <div class="text">
+          {{#message.text}}{{message.text}}{{/message.text}}
+          {{^message.text}}{{{message.html}}}{{/message.text}}
+        </div>
+        {{#message.attachment}}
+          <div class="attachment">
+            <div class="attachment_bar"></div>
+            <div class="attachment_contents">{{{message.attachment}}}</div>
+          </div>
+        {{/message.attachment}}
+      </span>
+    </div>
+  </script>
+{% endraw %}

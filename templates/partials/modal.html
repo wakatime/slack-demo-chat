@@ -1,0 +1,26 @@
+{% raw %}
+  <script id="modal-template" type="x-tmpl-mustache">
+    <div class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">{{title}}</h4>
+          </div>
+          <div class="modal-body">
+            {{#body}}{{{body}}}{{/body}}{{^body}}<div class="center-xs"><img src="/static/img/ajax-loader.gif" border="0" /></div>{{/body}}
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-xs-6 left-xs">
+                {{#ok_button}}<button type="button" class="btn btn-success">{{ok_button}}</button>{{/ok_button}}
+              </div>
+              <div class="col-xs-6 right-xs">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{^close_button}}Close{{/close_button}}{{#close_button}}{{close_button}}{{/close_button}}</button>
+              </div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  </script>
+{% endraw %}

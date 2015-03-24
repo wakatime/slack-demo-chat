@@ -1,0 +1,748 @@
+@import "../variables.less";
+@import "slack_patch_bg.less";
+@import "slack_loading.less";
+
+html {
+  font-size: 100%;
+}
+html, body {
+  height: 100%;
+}
+body {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  background-color: #2d2a26;
+}
+#notice {
+  display: inline-block;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: #006F12;
+  background-color: #006F12;
+  color: white;
+  min-width: 800px;
+  a, a:visited, a:focus {
+    color: white;
+  }
+}
+
+#top-half {
+  min-width: 800px;
+  .white-well {
+    padding: 0;
+    -webkit-box-shadow: 3px 2px 10px rgba(0, 0, 0, 0.8);
+    box-shadow: 3px 2px 10px rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+}
+
+#slack-window {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 600px;
+  min-width: 500px;
+  text-rendering: optimizelegibility;
+  a:not([href]) {
+    cursor: pointer;
+  }
+  #slack-top {
+    height: 53px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    min-width: 768px;
+    width: 100%;
+    #slack-team {
+      float: left;
+      font-size: 16px;
+      padding-left: 16px;
+      color: white;
+      width: 220px;
+      height: 100%;
+      background: #3e313c;
+      border-bottom: 2px solid #372c36;
+      cursor: pointer;
+      position: relative;
+      &:hover {
+        .fa {
+          color: white;
+        }
+      }
+      #team-name {
+        display: block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        font-weight: 700;
+        height: 53px;
+        line-height: 53px;
+        font-size: 1rem;
+      }
+      .fa {
+        position: absolute;
+        top: 18px;
+        right: 16px;
+        font-size: 16px;
+        color: #a09a9f;
+        &:hover {
+          color: white;
+        }
+      }
+    }
+    #slack-navbar {
+      background-color: #fff;
+      height: 100%;
+      #slack-active-channel {
+        text-rendering: optimizelegibility;
+        -webkit-font-smoothing: antialiased;
+        margin: 0 1rem 0 0;
+        display: block;
+        height: 53px;
+        line-height: 53px;
+        color: #9e9ea6;
+        font-size: 1rem;
+        font-weight: 500;
+        .fa.fa-star {
+          visibility: hidden;
+          color: #9e9ea6;
+          -moz-opacity: 1;
+          -khtml-opacity: 1;
+          -webkit-opacity: 1;
+          opacity: 1;
+          -ms-filter: alpha(opacity=100);
+          filter: alpha(opacity=100);
+          display: block;
+          position: absolute;
+          top: .8rem;
+          left: 220px;
+          padding: .5rem;
+          text-shadow: none;
+          font-size: .8rem;
+        }
+        .name {
+          .prefix {
+            color: #9e9ea6;
+            padding-right: .1rem;
+            font-weight: 500;
+            -webkit-transitionDISABLED: color .15s ease-out;
+            -moz-transitionDISABLED: color .15s ease-out;
+            -o-transitionDISABLED: color .15s ease-out;
+            transitionDISABLED: color .15s ease-out;
+            cursor: pointer;
+          }
+          font-size: 1.4rem;
+          line-height: 53px;
+          display: inline-block;
+          padding: 0 .5rem 0 1.5rem;
+          cursor: pointer;
+          color: #555459;
+          font-weight: 900;
+        }
+        i.fa-chevron-down {
+          font-size: .8rem;
+          color: #9e9ea6;
+          margin: 22px 1rem 0 0;
+          -webkit-transitionDISABLED: color .15s ease-out;
+          -moz-transitionDISABLED: color .15s ease-out;
+          -o-transitionDISABLED: color .15s ease-out;
+          transitionDISABLED: color .15s ease-out;
+          cursor: pointer;
+          vertical-align: top;
+          display: inline-block;
+        }
+        &:hover {
+          .name {
+            .prefix {
+              color: #555459;
+            }
+          }
+        }
+      }
+      form {
+        @media (max-width: @screen-sm-max) {
+          display: none;
+        }
+        width: 486px;
+        margin: 12px 0 0 0;
+        position: absolute;
+        top: 0;
+        right: 6px;
+        padding-right: 118px !important;
+        margin-bottom: 0 !important;
+        input {
+          margin-right: 0;
+          outline: 0;
+          padding: 2px 2rem;
+          font-size: 15px;
+          width: 100%;
+          border-radius: 40px;
+          background: #fff;
+          border: 1px solid #c9cbcd;
+          display: inline-block;
+          margin-bottom: 0;
+          height: 1.9rem;
+          color: #555459;
+          line-height: 24px;
+          background-color: transparent !important;
+        }
+        .icon_search {
+          -moz-opacity: .5;
+          -khtml-opacity: .5;
+          -webkit-opacity: .5;
+          opacity: .5;
+          -ms-filter: alpha(opacity=50);
+          filter: alpha(opacity=50);
+          top: 7px;
+          left: 10px;
+          text-shadow: none;
+          position: absolute;
+          font-size: 1rem;
+          color: #555459;
+          height: 20px;
+          width: 22px;
+        }
+      }
+      .slack-round-icon {
+        height: 30px;
+        width: 30px;
+        border-radius: 15px;
+        background: #fdfdfd;
+        border: 1px solid #ccc;
+        padding: 3px 7px;
+        color: #555459;
+        font-size: 21px;
+        font-weight: 300;
+        -moz-opacity: .8;
+        -khtml-opacity: .8;
+        -webkit-opacity: .8;
+        opacity: .8;
+        -ms-filter: alpha(opacity=80);
+        filter: alpha(opacity=80);
+        &:hover, &:active, &:focus {
+          text-decoration: none;
+          border: 1px solid #35a6ee;
+          color: #2a80b9;
+        }
+      }
+      #slack-help-icon {
+        position: absolute;
+        top: 12px;
+        right: 86px;
+      }
+      #slack-settings-icon {
+        position: absolute;
+        top: 12px;
+        right: 47px;
+        padding: 7px 7px;
+        font-size: 17px;
+      }
+      #slack-toggle-icon {
+        position: absolute;
+        top: 12px;
+        right: 7px;
+        padding: 6px 7px;
+        font-size: 16px;
+      }
+    }
+  }
+  #slack-middle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding-top: 53px;
+    padding-bottom: 64px;
+    #slack-middle-body {
+      width: 100%;
+      height: 100%;
+      #slack-middle-menu {
+        z-index: 99;
+        float: left;
+        background-color: #4d394b;
+        background: #4d394b;
+        color: #ab9ba9;
+        height: 100%;
+        overflow-y: auto;
+        width: 220px;
+        text-rendering: optimizelegibility;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        .slack-middle-menu-group {
+          margin-top: 16px;
+          margin-left: 16px;
+          margin-right: 16px;
+          margin-bottom: 32px;
+          h2.heading {
+            display: block;
+            cursor: pointer;
+            font-size: .8rem;
+            margin: 0 1rem .1rem 0;
+            text-transform: uppercase;
+            font-weight: 700;
+            width: 160px;
+            &:hover {
+              color: white;
+            }
+          }
+          ul {
+            list-style-type: none;
+            text-align: left;
+            color: #ab9ba9;
+            margin: 0 1px 0 0;
+            width: 204px;
+            margin-left: -16px;
+            padding-left: 0;
+            li {
+              text-shadow: 0 1px 1px rgba(0,0,0,0.25);
+              margin: 0;
+              font-size: 1rem;
+              width: 100%;
+              a {
+                font-size: 1rem;
+                text-shadow: 0 1px 1px rgba(0,0,0,0.25);
+                font-weight: 600;
+                display: block;
+                width: 100%;
+                padding-top: 2px;
+                padding-bottom: 2px;
+                margin: 0;
+                padding-left: 16px;
+                padding-right: 1px;
+                color: #ab9ba9;
+                text-decoration: none;
+                -webkit-border-top-right-radius: .25rem;
+                -webkit-border-bottom-right-radius: .25rem;
+                -webkit-border-bottom-left-radius: 0;
+                -webkit-border-top-left-radius: 0;
+                -moz-border-radius-topright: .25rem;
+                -moz-border-radius-bottomright: .25rem;
+                -moz-border-radius-bottomleft: 0;
+                -moz-border-radius-topleft: 0;
+                border-top-right-radius: .25rem;
+                border-bottom-right-radius: .25rem;
+                border-bottom-left-radius: 0;
+                border-top-left-radius: 0;
+                -moz-background-clip: padding-box;
+                -webkit-background-clip: padding-box;
+                background-clip: padding-box;
+                text-decoration: none !important;
+                &:hover {
+                  background: #3e313c;
+                  text-decoration: none;
+                }
+                .prefix {
+                  color: #ab9ba9;
+                  font-weight: 300;
+                  -moz-opacity: .5;
+                  -khtml-opacity: .5;
+                  -webkit-opacity: .5;
+                  opacity: .5;
+                  -ms-filter: alpha(opacity=50);
+                  filter: alpha(opacity=50);
+                }
+                &.active {
+                  background: #4c9689;
+                  color: white;
+                  .prefix {
+                    color: #b2d5c9;
+                    font-weight: 500;
+                    -moz-opacity: 1;
+                    -khtml-opacity: 1;
+                    -webkit-opacity: 1;
+                    opacity: 1;
+                    -ms-filter: alpha(opacity=100);
+                    filter: alpha(opacity=100);
+                  }
+                }
+              }
+            }
+          }
+          .slack-middle-menu-group-footer {
+            display: inline-block;
+            font-size: .8rem;
+            font-weight: 700;
+            color: #ab9ba9;
+            border-bottom: 1px dotted #ab9ba9;
+            cursor: pointer;
+            -webkit-transitionDISABLED: .1s .2s ease-out;
+            -moz-transitionDISABLED: .1s .2s ease-out;
+            -o-transitionDISABLED: .1s .2s ease-out;
+            transitionDISABLED: .1s .2s ease-out;
+            -webkit-transitionDISABLED: .1s;
+            -moz-transitionDISABLED: .1s;
+            -o-transitionDISABLED: .1s;
+            transitionDISABLED: .1s;
+            margin: .25rem 1rem .25rem 0;
+            &:hover {
+              color: white;
+              text-decoration: none;
+              border-bottom: 1px solid white;
+            }
+          }
+        }
+      }
+      #slack-messages {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 220px;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        overflow-y: scroll;
+        z-index: 1;
+        padding-left: 24px;
+        padding-top: 53px;
+        padding-bottom: 64px;
+        padding-right: 220px;
+
+        #slack-messages-body {
+          display: table;
+          vertical-align: bottom;
+          position: relative;
+          height: 100%;
+          word-wrap: break-word;
+          word-break: normal;
+          width: 100%;
+          #table-cell {
+            display: table-cell;
+            vertical-align: bottom;
+            width: 100%;
+            height: 100%;
+            .message {
+              position: relative;
+              display: inline-block;
+              z-index: 1;
+              width: 100%;
+              margin-bottom: .5rem;
+              padding: .25rem 2rem .1rem 3rem;
+              font-size: 15px;
+              line-height: 22px;
+              color: #3d3c40;
+              img.message-image {
+                position: absolute;
+                top: 3px;
+                left: 0;
+                width: 36px;
+                height: 36px;
+              }
+              .bot_label {
+                color: #a3a3a3;
+                font-weight: 500;
+                font-size: 12px;
+                margin: 0 .15rem;
+                padding: 0 .1rem;
+                background: #f7f7f7;
+              }
+              .message-timestamp {
+                text-align: left;
+                display: inline;
+                position: relative;
+                top: 0;
+                left: 0;
+                color: #babbbf;
+                font-size: 12px;
+                line-height: 1.2rem;
+                width: 36px;
+                margin-right: 0;
+                margin-left: 0;
+              }
+              i.fa-cog {
+                display: none;
+                position: absolute;
+                top: 26px;
+                right: 14px;
+                color: #DDD;
+                &:hover {
+                  color: #3d3c40;
+                }
+              }
+              &:hover {
+                i.fa-cog {
+                  display: block;
+                  cursor: pointer;
+                }
+              }
+              span.star {
+                display: none;
+                position: relative;
+                top: 0;
+                left: 0;
+                padding: 0 .25rem;
+                font-style: normal;
+                color: #babbbf;
+                font-size: .8rem;
+                &:hover {
+                  color: #fc0;
+                  cursor: pointer;
+                }
+              }
+              &:hover {
+                span.star {
+                  display: inline-block;
+                }
+              }
+              a.sender {
+                font-weight: 900;
+                padding-right: .25rem;
+                color: #3d3c40 !important;
+                margin-left: 0;
+                font-style: normal;
+                &:hover {
+                  color: #3d3c40;
+                }
+              }
+              .message_content {
+                display: block;
+                .attachment {
+                  .attachment_bar {
+                    background: #4183c4;
+                    display: table-cell;
+                    width: 4px;
+                    border-radius: 8px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  #slack-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 64px;
+    width: 100%;
+    #slack-user {
+      position: relative;
+      display: block;
+      z-index: 100;
+      float: left;
+      background: #3e313c;
+      border-top: 2px solid #372c36;
+      padding: 7px 0 9px 8px;
+      width: 220px;
+      height: 100%;
+      cursor: pointer;
+      text-rendering: optimizelegibility;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      img.img-rounded {
+        float: left;
+        width: 48px;
+        height: 48px;
+        margin: 0 .5rem 0 0;
+      }
+      #slack-user-name {
+        position: absolute;
+        top: 7px;
+        left: 64px;
+        color: white;
+        font-weight: 900;
+        line-height: 1.5rem;
+        margin-top: .2rem;
+        max-width: 120px;
+      }
+      #slack-user-status {
+        img#connection {
+          width: 12px;
+          height: 12px;
+          float: left;
+          position: absolute;
+          top: 38px;
+          left: 63px;
+        }
+        #slack-connection-status {
+          float: left;
+          color: #ab9ba9;
+          margin-left: 1rem;
+          line-height: 1.1rem;
+          font-size: 16px;
+          position: absolute;
+          top: 33px;
+          left: 63px;
+        }
+      }
+      i.fa-chevron-up {
+        position: absolute;
+        color: #a09a9f;
+        top: 1.5rem;
+        right: 1rem;
+        font-size: 1rem;
+        -webkit-transitionDISABLED: color .1s ease-out;
+        -moz-transitionDISABLED: color .1s ease-out;
+        -o-transitionDISABLED: color .1s ease-out;
+        transitionDISABLED: color .1s ease-out;
+      }
+      &:hover {
+        i.fa-chevron-up {
+          color: white;
+        }
+      }
+    }
+    #slack-message-input {
+      position: relative;
+      top: 0;
+      left: 0;
+      display: block;
+      height: 100%;
+      width: 100%;
+      padding-left: 220px;
+      z-index: 99;
+      background: white;
+      div {
+        position: relative;
+        display: block;
+        height: 100%;
+        width: 100%;
+        padding: 0 4px 0 25px;
+        a#up-arrow {
+          z-index: 99;
+          height: 41px;
+          position: absolute;
+          bottom: 22px;
+          left: 20px;
+          background: -webkit-gradient(linear,left bottom,left top,color-stop(0,#efefef),color-stop(1,#fff));
+          background: -ms-linear-gradient(bottom,#efefef,#fff);
+          background: -moz-linear-gradient(center bottom,#efefef 0,#fff 100%);
+          background: -o-linear-gradient(#fff,#efefef);
+          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#efefef',GradientType=0);
+          color: #b8b9c0;
+          width: 44px;
+          line-height: 36px;
+          padding: 0 .5rem;
+          border: 2px solid #e0e0e0;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: .2rem;
+          border-top-left-radius: .2rem;
+          text-align: center;
+          font-size: 1.5rem;
+          i.fa {
+            color: #b8b9c0;
+            text-shadow: 0 1px 1px white;
+            cursor: pointer;
+          }
+          &:hover {
+            background: #eb4d5c;
+            border-color: #eb4d5c;
+            color: white;
+            i.fa {
+              color: white;
+              text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+            }
+            text-decoration: none;
+          }
+        }
+        form {
+          z-index: 98;
+          position: relative;
+          width: 100%;
+          height: 100%;
+          padding-top: 1px;
+          padding-left: 39px;
+          padding-right: 16px;
+          input {
+            padding: 9px 30px 9px 8px;
+            background: white;
+            width: 100%;
+            font-size: .95rem;
+            line-height: 1.2rem;
+            border: 2px solid #e0e0e0;
+            border-left: 0;
+            -moz-border-radius-topright: .2rem;
+            -moz-border-radius-bottomright: .2rem;
+            -moz-border-radius-bottomleft: 0;
+            -moz-border-radius-topleft: 0;
+            border-top-right-radius: .2rem;
+            border-bottom-right-radius: .2rem;
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+            margin: 0;
+            color: #3d3c40;
+            &:focus, &:active {
+              -webkit-box-shadow: none;
+              -moz-box-shadow: none;
+              box-shadow: none;
+              outline: none;
+              outline-width: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  #slack-loading {
+    position: absolute;
+    top: 0;
+    left: 220px;
+    right: 0;
+    height: 100%;
+    z-index: 101;
+    div.center {
+      display: table;
+      width: 100%;
+      height: 100%;
+      div {
+        display: table-cell;
+        vertical-align: middle;
+        width: 100%;
+        text-align: center;
+        font-size: 2.2rem;
+        color: #4D394B;
+        font-weight: 900;
+        text-shadow: 0 1px white;
+      }
+    }
+  }
+}
+
+#three-points {
+  min-width: 800px;
+  color: #DFDFDF;
+  a {
+    color: #DFDFDF;
+  }
+  h3 {
+    font-size: 24px;
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: 10px;
+    padding-bottom: 0;
+  }
+  i.fa {
+    font-size: 60px;
+    display: block;
+    margin-bottom: 10px;
+  }
+  img {
+    display: block;
+    margin-bottom: 10px;
+    height: 60px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  p.subheading {
+    display: inline-block;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    max-width: 250px;
+    @media (max-width: @screen-sm-max) {
+      margin-bottom: 60px;
+    }
+  }
+}
+
+#call-to-action {
+  min-width: 800px;
+}

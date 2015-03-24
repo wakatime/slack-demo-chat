@@ -1,0 +1,188 @@
+{% extends "common/base.html" %}
+
+{% block css %}
+  {% compress 'css' %}
+    <link href="{{STATIC_URL}}css/landing_pages/slack.less" rel="stylesheet" type="text/less">
+    <link href="{{STATIC_URL}}libs/animate.css/animate.css" rel="stylesheet" type="text/css">
+  {% endcompress %}
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+  <div id="notice">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-10 col-sm-offset-1 center-xs">
+          This is a demo showing how the WakaTime + Slack integration would look in your Slack chat. <a href="https://wakatime.com/" target="_blank">WakaTime</a> is not created by, affiliated with, or supported by <a href="https://slack.com/" target="_blank">Slack Technologies, Inc.</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="top-half" class="container-fluid">
+    <div class="row m-top-xs-40">
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <div class="white-well dark-border">
+          <div id="slack-window">
+            <div id="slack-loading" class="animated">
+              <div class="center"><div>Loading</div></div>
+            </div>
+            <div id="slack-top">
+              <div id="slack-team">
+                <span id="team-name">WakaTime + Slack</span>
+                <i class="fa fa-chevron-down"></i>
+              </div>
+              <div id="slack-navbar">
+                <h2 id="slack-active-channel">
+                  <span class="fa fa-star"></span>
+                  <span class="name"><span class="prefix">#</span>development</span>
+                  <i class="fa fa-chevron-down"></i>
+                </h2>
+                <form id="slack-search">
+                  <input type="text" name="q" placeholder="Search" autocomplete="off" value="" maxlength="250" />
+                  <div class="icon_search fa fa-search"></div>
+                  <a id="search_clear" class="icon_close client_header_icon"></a>
+                </form>
+                <a id="slack-help-icon" href="/help/faq/general" title="Get Help" class="slack-round-icon fa fa-question"></a>
+                <a id="slack-settings-icon" title="Get Help" class="slack-round-icon fa fa-ellipsis-h"></a>
+                <a id="slack-toggle-icon" title="Get Help" class="slack-round-icon fa fa-chevron-left"></a>
+              </div>
+            </div>
+            <div id="slack-middle">
+              <div id="slack-middle-body">
+                <div id="slack-middle-menu">
+                  <div id="slack-channels" class="slack-middle-menu-group">
+                    <h2 class="heading">CHANNELS</h2>
+                    <ul>
+                      <li><a class="active"><span class="prefix">#</span> development</a></li>
+                      <li><a><span class="prefix">#</span> general</a></li>
+                    </ul>
+                    <a class="slack-middle-menu-group-footer">Create a channel...</a>
+                  </div>
+                  <div id="slack-dm" class="slack-middle-menu-group">
+                    <h2 class="heading">DIRECT MESSAGES</h2>
+                    <a class="slack-middle-menu-group-footer">Send a direct message...</a>
+                  </div>
+                  <div id="slack-pm" class="slack-middle-menu-group">
+                    <h2 class="heading">PRIVATE GROUPS</h2>
+                    <a class="slack-middle-menu-group-footer">Open a group...</a>
+                  </div>
+                </div>
+                <div id="slack-messages">
+                  <div id="slack-messages-body">
+                    <div id="table-cell">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="slack-bottom">
+              <div id="slack-user">
+                <img id="slack-user-avatar" src="{% if current_user.is_authenticated() %}{{current_user.photo}}{% else %}{{ 'https://wakatime.com/static/img/user-at-computer.png' }}{% endif %}" class="img-rounded" />
+                <div id="slack-user-name">{% if current_user.is_authenticated() and current_user.username %}{{current_user.username}}{% else %}{{ 'anonymous' }}{% endif %}</div>
+                <div id="slack-user-status">
+                  {% include 'landing_pages/slack_connection_icon.html' %}
+                  <span id="slack-connection-status">online</span>
+                </div>
+                <i class="fa fa-chevron-up"></i>
+              </div>
+              <div id="slack-message-input">
+                <div>
+                  <a id="up-arrow"><i class="fa fa-arrow-circle-o-up"></i></a>
+                  <form>
+                    <input type="text" name="message" placeholder="" autocomplete="off" value="" />
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'landing_pages/slack_message.html' %}
+
+  <div id="three-points" class="container-fluid m-top-xs-40 m-top-sm-50 m-bottom-xs-0 m-bottom-sm-40">
+    <div class="row">
+      <div class="col-xs-12 col-sm-4 col-md-3 col-md-offset-1 center-xs">
+        <h3>Open Source</h3>
+        <!--<img src="{{ STATIC_URL }}img/icons/technology-15.png" />-->
+        {% if current_user.is_authenticated() %}
+          <a href="/integrations/slack" target="_blank">
+        {% else %}
+          <a href="/plugins" target="_blank">
+        {% endif %}
+          <img src="{{ STATIC_URL }}img/icons/seo-22.png" />
+        </a>
+        <p class="subheading">We open-source all our plugins</p>
+      </div>
+      <div class="col-xs-12 col-sm-4 center-xs">
+        <h3>Your Personal Dashboard</h3>
+        {% if current_user.is_authenticated() %}
+          <a href="/integrations/slack" target="_blank">
+        {% else %}
+          <a href="/plugins" target="_blank">
+        {% endif %}
+          <img src="{{ STATIC_URL }}img/icons/charts-11.png" />
+        </a>
+        <p class="subheading">Detailed charts about your programming</p>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-3 center-xs">
+        <h3>Fully Automatic</h3>
+        {% if current_user.is_authenticated() %}
+          <a href="/integrations/slack" target="_blank">
+        {% else %}
+          <a href="/plugins" target="_blank">
+        {% endif %}
+          <img src="{{ STATIC_URL }}img/icons/charts-03.png" />
+        </a>
+        <p class="subheading">Install the plugin and get reports by email</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="call-to-action" class="container-fluid m-bottom-xs-60 show-xs hide-sm">
+    <div class="row">
+      <div class="col-xs-12 center-xs">
+        {% if current_user.is_authenticated() %}
+          <a href="/integrations/slack" class="btn btn-success btn-lg">Connect WakaTime + Slack</a>
+        {% else %}
+          <a href="/plugins" class="btn btn-success btn-lg">Install the Plugin</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% include 'partials/modal.html' %}
+
+  <a class="hide-xs show-sm" href="https://github.com/wakatime/slack-demo-chat"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+{% endblock %}
+
+{% block olark %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    window.options = {
+      current_user: {
+        is_authenticated: {{ 'true' if current_user.is_authenticated() else 'false' }},
+        username: "{{ current_user.username if current_user.is_authenticated() and current_user.username else 'anonymous' }}",
+        email: "{{ current_user.email if current_user.is_authenticated() else '' }}",
+        photo: "{{ current_user.photo if current_user.is_authenticated() else 'https://wakatime.com/static/img/user-at-computer.png' }}",
+      },
+      chat_server_host: "{{ config['CHAT_SERVER_HOST'] }}",
+      chat_server_port: "{{ config['CHAT_SERVER_PORT'] }}",
+    };
+  </script>
+  <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+  {% compress 'js' %}
+    <script src="{{STATIC_URL}}libs/moment/moment.js"></script>
+    <script src="{{STATIC_URL}}libs/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+    <script src="{{STATIC_URL}}js/landing_pages/slack.js"></script>
+  {% endcompress %}
+{% endblock %}
